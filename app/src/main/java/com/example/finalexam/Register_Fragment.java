@@ -19,7 +19,9 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
+import android.provider.ContactsContract;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,15 +34,28 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 
-public class Register_Fragment extends Fragment {
+public class Register_Fragment extends Fragment  {
+
 
     Uri imageUri;
     View view;
@@ -49,11 +64,15 @@ public class Register_Fragment extends Fragment {
     EditText fullname, email, password, date, username, marketingsector ;
     RadioGroup radioGroup;
     RadioButton radioButton;
+    private String TAG="MainActivity";
 
     Button signin, register;
 
     private StorageReference mStorageRef;
     private DatabaseReference databaseReference;
+
+    private VolleyService mVolleyService;
+    private IResult mResultCallback = null;
 
     private String id;
     private String name;
@@ -431,4 +450,85 @@ public class Register_Fragment extends Fragment {
         return true;
 
     }
+
+    private void addDataVolley() {
+        name = fullname.getText().toString();
+        mail = email.getText().toString();
+        pass = password.getText().toString();
+        datejoin = date.getText().toString();
+        uname = username.getText().toString();
+        sector= marketingsector.getText().toString();
+
+        if (gender_id == R.id.male) {
+            gen = "Admin";
+        } else if (gender_id == R.id.female) {
+            gen = "Coustomer";
+        } else {
+            gen = "None";
+
+        }
+
+        // Creating string request with post method.
+        StringRequest stringRequest = new
+                StringRequest(Request.Method.POST, Utils.SERVER_HOME_URL,
+                        new Response.Listener<String>() {
+                            @Override
+                            public void onResponse(String ServerResponse) {
+                                Log.i("tag",ServerResponse);
+
+                                // Hiding the progress dialog after all tas
+
+                                try {
+                                    JSONObject jsonObject = new
+                                            JSONObject(ServerResponse);
+
+                                    Toast.makeText(getContext(),jsonObject.getString("message"),
+                                            Toast.LENGTH_LONG).show();
+
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+
+                            }
+                        },
+                        new Response.ErrorListener() {
+                            @Override
+                            public void onErrorResponse(VolleyError volleyError) {
+
+
+                                        Toast.makeText(getActivity(),
+
+                                        volleyError.toString(),
+                                        Toast.LENGTH_LONG).show();
+                            }
+                        }) {
+                    @Override
+                    protected Map<String, String> getParams() {
+
+                        // Creating Map String Params.
+                        Map<String, String> params = new HashMap<String, String>();
+
+                        // Adding All values to Params.
+                        params.put("fullname", name);
+                        params.put("email", mail);
+                        params.put("password", pass);
+                        params.put("date", datejoin);
+                        params.put("username", uname);
+                        params.put("marketingsector", sector);
+                        params.put("radioGroup", gen);
+
+                        return params;
+                    }
+
+                };
+
+        // Creating RequestQueue.
+        RequestQueue requestQueue =
+                Volley.newRequestQueue(this.getActivity());
+
+        // Adding the StringRequest object into requestQueue.
+        requestQueue.add(stringRequest);
+
+    }
+
 }
