@@ -44,7 +44,7 @@ public class Customer extends Fragment {
     View view;
     ImageView imageView;
     Button fab;
-    EditText productType, productQuantity, DiscountPercentage, TotalPrice, coordinates ;
+    EditText productType, productQuantity, DiscountPercentage, TotalPrice, coordinates,name ;
     RadioGroup radioGroup;
     RadioButton radioButton;
 
@@ -57,6 +57,7 @@ public class Customer extends Fragment {
     }
 
     private String id;
+    private String n;
     private String type;
     private String quantity;
     private String discount;
@@ -78,14 +79,14 @@ public class Customer extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
 
-        view = inflater.inflate(R.layout.fragment_register_, container, false);
+        view = inflater.inflate(R.layout.fragment_customer, container, false);
 
         imageView = view.findViewById(R.id.profile_image);
         fab = view.findViewById(R.id.fab);
 
         productType = view.findViewById(R.id.productType);
         productQuantity= view.findViewById(R.id.quantity);
-        //hob = view.findViewById(R.id.hob);
+        name= view.findViewById(R.id.Name);
 
         DiscountPercentage = view.findViewById(R.id.discount);
         TotalPrice = view.findViewById(R.id.price);
@@ -130,12 +131,12 @@ public class Customer extends Fragment {
 //        });
 
 
-//        save.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.main_fragment, new Customer()).commit();
-//            }
-//        });
+        save.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.main_fragment, new Customer()).commit();
+            }
+        });
 
         save.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -145,7 +146,7 @@ public class Customer extends Fragment {
 //                    return;
 //                }
                 addData();
-                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.main_fragment, new Admin()).commit();
+                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.main_fragment, new Customer()).commit();
                 Toast.makeText(getContext(), "Saved Successful", Toast.LENGTH_LONG).show();
 
 
@@ -288,6 +289,7 @@ public class Customer extends Fragment {
 
 
     public void addData() {
+        n = name.getText().toString();
         type = productType.getText().toString();
         quantity =productQuantity.getText().toString();
         price = TotalPrice.getText().toString();
@@ -303,7 +305,7 @@ public class Customer extends Fragment {
 
         String image = "profile_images/" + id;
 
-        Data newData = new Data(id, type, quantity, price, discount, location, image);
+        Data newData = new Data(id,n, type, quantity, price, discount, location, image);
 
         mStorageRef.child(id).putFile(imageUri);
 

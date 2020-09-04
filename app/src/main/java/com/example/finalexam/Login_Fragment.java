@@ -23,11 +23,12 @@ public class Login_Fragment extends Fragment {
 
 
     View view;
-    EditText email,password;
+    EditText email,password, gender;
     Button signin,register;
 
     String EMAIL;
     String PASS;
+    String GEN;
 
 
     @Override
@@ -48,6 +49,7 @@ public class Login_Fragment extends Fragment {
         password=view.findViewById(R.id.signin_password);
         signin=view.findViewById(R.id.signin__login_button);
         register=view.findViewById(R.id.signin_register);
+        //gender=view.findViewById(R.id.gender);
 
 
 
@@ -82,6 +84,7 @@ public class Login_Fragment extends Fragment {
                                 getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.main_fragment, new Customer()).commit();
                                 break;
                             }
+
                         };
                     }
 
@@ -146,5 +149,7 @@ public class Login_Fragment extends Fragment {
         return true;
 
     }
+
+
 
 }

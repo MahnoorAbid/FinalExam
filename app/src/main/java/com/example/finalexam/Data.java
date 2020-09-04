@@ -3,15 +3,21 @@ package com.example.finalexam;
 public class Data {
     private String id;
     private String image;
+    private String name;
     private String type;
     private String quantity;
     private String discount;
     private String price;
     private String location;
 
+    public Data(){
 
-    public Data(String id, String type, String quantity, String price, String discount, String location, String image) {
+    }
+
+
+    public Data(String id, String name, String type, String quantity, String price, String discount, String location, String image) {
         this.id = id;
+        this.name = name;
         this.type = type;
         this.quantity = quantity;
         this.price = price;
@@ -20,7 +26,8 @@ public class Data {
         this.image = image;
     }
 
-    public Data( String type, String quantity, String price, String discount, String location, String image) {
+    public Data( String name,String type, String quantity, String price, String discount, String location, String image) {
+        this.name = name;
         this.type = type;
         this.quantity = quantity;
         this.price = price;
@@ -37,6 +44,14 @@ public class Data {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getType() {

@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/register_user_Layout"
     android:layout_margin="29dp"
     android:background="#fff"
     tools:context=".Customer">
@@ -62,6 +63,14 @@
             android:paddingBottom="0dp"
             android:layout_marginBottom="-10dp"
             android:orientation="vertical">
+
+            <EditText
+                android:id="@+id/Name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Name"
+                android:maxLength="30"
+                android:inputType="text"/>
 
             <EditText
                 android:id="@+id/productType"
@@ -139,15 +148,17 @@
 
 
             <Button
-                android:id="@+id/save"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:paddingTop="15dp"
-                android:paddingBottom="15dp"
-                android:text="Save"
-                android:textColor="#000"
-                />
+            android:id="@+id/save"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:paddingTop="15dp"
+            android:paddingBottom="15dp"
+            android:text="Save"
+            android:textColor="#000"
+            />
+
+
 
 
 
